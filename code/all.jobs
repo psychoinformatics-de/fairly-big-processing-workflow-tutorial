@@ -1,0 +1,22 @@
+#!/bin/bash
+code/call.job sub-05
+code/call.job sub-16
+code/call.job sub-11
+code/call.job sub-08
+code/call.job sub-02
+code/call.job sub-06
+code/call.job sub-15
+code/call.job sub-20
+code/call.job sub-18
+code/call.job sub-12
+code/call.job sub-01
+code/call.job sub-03
+code/call.job sub-09
+code/call.job sub-10
+code/call.job sub-17
+code/call.job sub-04
+code/call.job sub-21
+code/call.job sub-13
+code/call.job sub-19
+code/call.job sub-14
+code/call.job sub-07

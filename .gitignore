@@ -1,3 +1,4 @@
 logs
 dag_tmp
 .condor_datalad_lock
+.SLURM_datalad_lock

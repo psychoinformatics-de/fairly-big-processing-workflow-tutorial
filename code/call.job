@@ -1,0 +1,19 @@
+#!/bin/bash -x
+#
+# redundant input per subject
+
+subid=$1
+
+# define DSLOCKFILE, DATALAD & GIT ENV for participant_job
+export DSLOCKFILE=/data/group/psyinf/ukb_workflow_template/forrest/.SLURM_datalad_lock DATALAD_GET_SUBDATASET__SOURCE__CANDIDATE__101cat=https://github.com/ReproNim/containers.git#{id} GIT_AUTHOR_NAME=$(git config user.name) GIT_AUTHOR_EMAIL=$(git config user.email) JOBID=${subid:4}.${SLURM_JOB_ID} 
+# use subject specific folder
+mkdir /dev/shm//${JOBID}
+cd /dev/shm//${JOBID}
+
+# run things
+/data/group/psyinf/ukb_workflow_template/forrest/code/participant_job ria+file:///data/group/psyinf/inputstore#47a9ef9e-9fa0-49cd-873f-c51cc501da96 /data/group/psyinf/outputstore/47a/9ef9e-9fa0-49cd-873f-c51cc501da96 ${subid} >/data/group/psyinf/ukb_workflow_template/forrest/logs/${JOBID}.out 2>/data/group/psyinf/ukb_workflow_template/forrest/logs/${JOBID}.err
+
+cd /dev/shm//
+chmod 777 -R /dev/shm//${JOBID}
+rm -fr /dev/shm//${JOBID}
+
