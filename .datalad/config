@@ -1,2 +1,5 @@
 [datalad "dataset"]
 	id = 47a9ef9e-9fa0-49cd-873f-c51cc501da96
+[datalad "containers.bids-fmriprep"]
+	image = code/pipeline/images/bids/bids-fmriprep--20.2.0.sing
+	cmdexec = singularity exec -B {{pwd}} --cleanenv {img} {cmd}
