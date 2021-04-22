@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# the job assumes that it is a good idea to run everything in PWD
+# the job manager should make sure that is true
+
+# fail whenever something is fishy, use -x to get verbose logfiles
+set -e -u -x
+
+dssource="$1"
+pushgitremote="$2"
+subid="$3"
+
+# get the analysis dataset, which includes the inputs as well
+# importantly, we do not clone from the lcoation that we want to push the
+# results too, in order to avoid too many jobs blocking access to
+# the same location and creating a throughput bottleneck
+datalad clone "${dssource}" ds
+
+# all following actions are performed in the context of the superdataset
+cd ds
+
+# in order to avoid accumulation temporary git-annex availability information
+# and to avoid a syncronization bottleneck by having to consolidate the
+# git-annex branch across jobs, we will only push the main tracking branch
+# back to the output store (plus the actual file content). Final availability
+# information can be establish via an eventual `git-annex fsck -f joc-storage`.
+# this remote is never fetched, it accumulates a larger number of branches
+# and we want to avoid progressive slowdown. Instead we only ever push
+# a unique branch per each job (subject AND process specific name)
+git remote add outputstore "$pushgitremote"
+
+# all results of this job will be put into a dedicated branch
+git checkout -b "job-$JOBID"
+
+# we pull down the input subject manually in order to discover relevant
+# files. We do this outside the recorded call, because on a potential
+# re-run we want to be able to do fine-grained recomputing of individual
+# outputs. The recorded calls will have specific paths that will enable
+# recomputation outside the scope of the original Condor setup
+datalad get -n "inputs/data/${subid}"
+
+# ------------------------------------------------------------------------------
+# FIXME: Replace the datalad containers-run command starting below with a
+# command that fits your analysis. Here, it invokes the script "runfmriprep.sh"
+# that contains an fmriprep parametrization.
+
+datalad containers-run \
+  -m "Compute ${subid}" \
+  -n bids-fmriprep \
+  --explicit \
+  -o fmriprep/${subid} \
+  -i inputs/data/${subid}/anat/ \
+  -i code/license.txt \
+  "sh code/runfmriprep.sh $subid"
+
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+# push result file content first - does not need a lock, no interaction with Git
+datalad push --to output-storage
+# and the output branch next - needs a lock to prevent concurrency issues
+flock --verbose $DSLOCKFILE git push outputstore
+
+echo SUCCESS
+# job handler should clean up workspace
