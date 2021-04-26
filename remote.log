@@ -1,1 +1,2 @@
+c564c916-629f-4bb8-8113-01a3b04d7a51 autoenable=true location=https://gin.g-node.org/adswa/processing-workflow-tutorial name=gin type=git timestamp=1619443914.305227753s
 d8807e1f-25ef-4267-a5b9-698eae068b4c archive-id=47a9ef9e-9fa0-49cd-873f-c51cc501da96 autoenable=true encryption=none externaltype=ora name=output-storage type=external url=ria+file:///data/group/psyinf/outputstore timestamp=1619075928.769486877s
