@@ -7,9 +7,29 @@ All results are fully and automatically reproducible with
 [datalad](http://www.datalad.org). The details of this workflow are described at
 https://github.com/psychoinformatics-de/processing-workflow.
 
+
+## How to recompute
+
+Make sure to fulfill the [Software Requirements](https://github.com/psychoinformatics-de/fairly-big-processing-workflow#software-requirements) listed below.
+Then, clone this dataset with DataLad.
+Next, take a look at the Git history of the data and identify the 40-character long
+commit shasum of a single-subject computation, then use this shasum in a
+``datalad rerun`` command:
+
+```
+$ datalad rerun a95484c793793b7274dbef5239e0cc3d315ca0fe
+```
+
+## How to obtain data without recomputation
+
+First, clone this dataset with DataLad.
+Next, retrieve any file(s) of your choice with the ``datalad get`` command.
+
+
+
 ## Software requirements for automatic recomputation
 
-Software requirements for the worflow are described in details [here](https://github.com/psychoinformatics-de/fairly-big-processing-workflow#software-requirements).
+Software requirements for the worflow are described in detail [here](https://github.com/psychoinformatics-de/fairly-big-processing-workflow#software-requirements).
 
 If you're not planning to use any job scheduling / batch processing system (e.g. [HTCondor](https://research.cs.wisc.edu/htcondor/), [SLURM](https://slurm.schedmd.com/documentation.html)), but would simply like to run the example below, make sure to have the following software installed:
 
@@ -57,20 +77,4 @@ $ vagrant up && \
 ```
 
 Lastly, install the required software in your VM, as if your operating system was Linux. Please follow instructions described in the ["Software requirements for automatic recomputation"](#software-requirements-for-automatic-recomputation) section above.
-
-## How to recompute
-
-First, clone this dataset with DataLad.
-Next, take a look at the Git history of the data and identify the 40-character long
-commit shasum of a single-subject computation, then use this shasum in a
-``datalad rerun`` command:
-
-```
-$ datalad rerun a95484c793793b7274dbef5239e0cc3d315ca0fe
-```
-
-## How to obtain data without recomputation
-
-First, cline this dataset with DataLad.
-Next, retrieve any file(s) of your choice with the ``datalad get`` command.
 
