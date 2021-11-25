@@ -78,3 +78,10 @@ $ vagrant up && \
 
 Lastly, install the required software in your VM, as if your operating system was Linux. Please follow instructions described in the ["Software requirements for automatic recomputation"](#software-requirements-for-automatic-recomputation) section above.
 
+
+## Acknowledgements
+
+This development was supported by European Union’s Horizon 2020 research and
+innovation programme under grant agreement [Human Brain Project SGA3
+(H2020-EU.3.1.5.3, grant no.
+945539)](https://cordis.europa.eu/project/id/945539).
