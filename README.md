@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/361762412.svg)](https://zenodo.org/badge/latestdoi/361762412)
+
 # Preprocessed structural data from the studyforrest project
 
 This dataset contains the results of an fMRIprep-based, anatomical preprocessing
